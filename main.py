@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from flask import Flask, render_template, redirect, url_for, request
-import pyautogui
+from pyautogui import move, moveTo, click, doubleClick, press, hotkey, size
 import webbrowser
 
 app = Flask(__name__)
@@ -57,53 +57,53 @@ def ctrlrMouse(mouseRequest):
     duration = 0.2
 
     if mouseRequest == "^^^":
-        pyautogui.move(None, -200, duration=duration)
+        move(None, -200, duration=duration)
     elif mouseRequest == "^^":
-        pyautogui.move(None, -100, duration=duration)
+        move(None, -100, duration=duration)
     elif mouseRequest == "^":
-        pyautogui.move(None, -50, duration=duration)
+        move(None, -50, duration=duration)
     elif mouseRequest == "v":
-        pyautogui.move(None, 50, duration=duration)
+        move(None, 50, duration=duration)
     elif mouseRequest == "vv":
-        pyautogui.move(None, 100, duration=duration)
+        move(None, 100, duration=duration)
     elif mouseRequest == "vvv":
-        pyautogui.move(None, 200, duration=duration)
+        move(None, 200, duration=duration)
     elif mouseRequest == ">>>":
-        pyautogui.move(200, None, duration=duration)
+        move(200, None, duration=duration)
     elif mouseRequest == ">>":
-        pyautogui.move(100, None, duration=duration)
+        move(100, None, duration=duration)
     elif mouseRequest == ">":
-        pyautogui.move(50, None, duration=duration)
+        move(50, None, duration=duration)
     elif mouseRequest == "<":
-        pyautogui.move(-50, None, duration=duration)
+        move(-50, None, duration=duration)
     elif mouseRequest == "<<":
-        pyautogui.move(-100, None, duration=duration)
+        move(-100, None, duration=duration)
     elif mouseRequest == "<<<":
-        pyautogui.move(-200, None, duration=duration)
+        move(-200, None, duration=duration)
     elif mouseRequest == "Center":
-        screenWidth, screenHeight = pyautogui.size()
-        pyautogui.moveTo(screenWidth/2, screenHeight/2, duration=duration)
+        screenWidth, screenHeight = size()
+        moveTo(screenWidth/2, screenHeight/2, duration=duration)
     elif mouseRequest == "0":
-        pyautogui.click()
+        click()
     elif mouseRequest == "Double Click":
-        pyautogui.doubleClick()
+        doubleClick()
     else:
         return
 
 
 def ctrlrKeyboard(keyboardRequest):
     if keyboardRequest == "PgDn":
-        pyautogui.press('pgdn')
+        press('pgdn')
     elif keyboardRequest == "PgUp":
-        pyautogui.press('pgup')
+        press('pgup')
     elif keyboardRequest == "Enter":
-        pyautogui.press('enter')
+        press('enter')
     elif keyboardRequest == "Tab":
-        pyautogui.press('tab')
+        press('tab')
     elif keyboardRequest == "Space":
-        pyautogui.press('space')
+        press('space')
     elif keyboardRequest == "Close":
-        pyautogui.hotkey('ctrl', 'w')
+        hotkey('ctrl', 'w')
     else:
         return
 
