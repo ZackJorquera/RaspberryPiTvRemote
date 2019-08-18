@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>TV Remote</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div id="container">
+	<div id="intro">
+		<div id="pageHeader">
+			<h1><span>TV Remote</span></h1>
+		</div>
+
+		<div id="preamble">
+
+			<h2>Mouse Movement</h2>
+			<form method="POST">
+                <table>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td align="middle"><input type="submit" name="{{ reqFormMouse }}" value="^^^"><br /></td>
+                        <td />
+                        <td />
+                        <td />
+                    </tr>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td align="middle"><input type="submit" name="{{ reqFormMouse }}" value="^^"><br /></td>
+                        <td />
+                        <td />
+                        <td />
+                    </tr>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td align="middle"><input type="submit" name="{{ reqFormMouse }}" value="^"><br /></td>
+                        <td />
+                        <td />
+                        <td />
+                    </tr>
+                    <tr>
+                        <td><input type="submit" name="{{ reqFormMouse }}" value="<<<"><br /></td>
+                        <td><input type="submit" name="{{ reqFormMouse }}" value="<<"><br /></td>
+                        <td><input type="submit" name="{{ reqFormMouse }}" value="<"><br /></td>
+                        <td align="middle"><input type="submit" name="{{ reqFormMouse }}" value="0"><br /></td>
+                        <td><input type="submit" name="{{ reqFormMouse }}" value=">"><br /></td>
+                        <td><input type="submit" name="{{ reqFormMouse }}" value=">>"><br /></td>
+                        <td><input type="submit" name="{{ reqFormMouse }}" value=">>>"><br /></td>
+                    </tr>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td align="middle"><input type="submit" name="{{ reqFormMouse }}" value="v"><br /></td>
+                        <td />
+                        <td />
+                        <td />
+                    </tr>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td align="middle"><input type="submit" name="{{ reqFormMouse }}" value="vv"><br /></td>
+                        <td />
+                        <td />
+                        <td />
+                    </tr>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td align="middle"><input type="submit" name="{{ reqFormMouse }}" value="vvv"><br /></td>
+                        <td />
+                        <td />
+                        <td />
+                    </tr>
+                    </table>
+				<input type="submit" name="{{ reqFormMouse }}" value="Double Click"><br />
+				<input type="submit" name="{{ reqFormMouse }}" value="Center"><br />
+			</form>
+
+            <h2>Keyboard</h2>
+			<form method="POST">
+				<input type="submit" name="{{ reqFormKeyboard }}" value="PgUp"><br />
+                <input type="submit" name="{{ reqFormKeyboard }}" value="PgDn"><br />
+                <input type="submit" name="{{ reqFormKeyboard }}" value="Tab"><br />
+				<input type="submit" name="{{ reqFormKeyboard }}" value="Enter"><br />
+				<input type="submit" name="{{ reqFormKeyboard }}" value="Space"><br />
+				<input type="submit" name="{{ reqFormKeyboard }}" value="Close"><br />
+			</form>
+		</div>
+	</div>
+
+	<div id="linkList">
+		<div id="linkList2">
+			<div id="lselect">
+				<ul>
+					<li><a href="/Home">Home</a></li>
+					<li><a href="/MouseAndKeyboardCtrlr">Ctrl</a></li>
+					<li><a href="#">GitHub</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

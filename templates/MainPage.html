@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<title>TV Remote</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div id="container">
+	<div id="intro">
+		<div id="pageHeader">
+			<h1><span>TV Remote</span></h1>
+		</div>
+
+		<div id="preamble">
+
+			<h2>Quick Actions</h2>
+			<form method="POST">
+				<input type="submit" name="submit" value="{{ openNetflixString }}"><br />
+                <input type="submit" name="submit" value="{{ openHuluString }}"><br />
+				<input type="submit" name="submit" value="{{ openYoutubeString }}"><br />
+				<input type="submit" name="submit" value="{{ openFileString }}"><br />
+			</form>
+		</div>
+	</div>
+
+	<div id="linkList">
+		<div id="linkList2">
+			<div id="lselect">
+				<ul>
+					<li><a href="/Home">Home</a></li>
+					<li><a href="/MouseAndKeyboardCtrlr">Ctrl</a></li>
+					<li><a href="#">GitHub</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
