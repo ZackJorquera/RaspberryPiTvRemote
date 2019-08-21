@@ -6,6 +6,19 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+{% if cpuOverHeat == "True" %}
+	<div id="banner">
+		<p id="bannerText">{{ cpuOverHeatMsg }}</p>
+    	<div id="close" onclick="myFunction()">&times;</div>
+	</div>
+
+	<script>
+		function myFunction() {
+			var x = document.getElementById("banner");
+			x.style.display = "none";
+		}
+	</script>
+{% endif %}
 
 <div id="container">
 	<div id="intro">
@@ -20,6 +33,10 @@
 				<input type="submit" name="submit" value="{{ openNetflixString }}"><br />
                 <input type="submit" name="submit" value="{{ openHuluString }}"><br />
 				<input type="submit" name="submit" value="{{ openYoutubeString }}"><br />
+
+                <input name="urlInputBox" value="https://www.google.com">
+				<input type="submit" name="submit" value="{{ openURLString }}"><br />
+
 				<input type="submit" name="submit" value="{{ openFileString }}"><br />
 			</form>
 		</div>

@@ -6,6 +6,19 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+{% if cpuOverHeat == "True" %}
+	<div id="banner">
+		<p id="bannerText">{{ cpuOverHeatMsg }}</p>
+    	<div id="close" onclick="myFunction()">&times;</div>
+	</div>
+
+	<script>
+		function myFunction() {
+			var x = document.getElementById("banner");
+			x.style.display = "none";
+		}
+	</script>
+{% endif %}
 
 <div id="container">
 	<div id="intro">
@@ -83,6 +96,7 @@
                     </tr>
                     </table>
 				<input type="submit" name="{{ reqFormMouse }}" value="Double Click"><br />
+				<input type="submit" name="{{ reqFormMouse }}" value="Right Click"><br />
 				<input type="submit" name="{{ reqFormMouse }}" value="Center"><br />
 			</form>
 
@@ -94,6 +108,31 @@
 				<input type="submit" name="{{ reqFormKeyboard }}" value="Enter"><br />
 				<input type="submit" name="{{ reqFormKeyboard }}" value="Space"><br />
 				<input type="submit" name="{{ reqFormKeyboard }}" value="Close"><br />
+
+                <input name="{{ typeInputBox }}" value="">
+				<input type="submit" name="{{ reqFormType }}" value="Type"><br />
+
+                <table>
+                    <tr>
+                        <td />
+                        <td><input type="submit" name="{{ reqFormKeyboard }}" value="&uarr;"></td>
+                        <td />
+                    </tr>
+                    <tr>
+                        <td><input type="submit" name="{{ reqFormKeyboard }}" value="&larr;"></td>
+                        <td />
+                        <td><input type="submit" name="{{ reqFormKeyboard }}" value="&rarr;"></td>
+                    </tr>
+                    <tr>
+                        <td />
+                        <td><input type="submit" name="{{ reqFormKeyboard }}" value="&darr;"></td>
+                        <td />
+                    </tr>
+                </table>
+
+				<input type="submit" name="{{ reqFormKeyboard }}" value="F5"><br />
+				<input type="submit" name="{{ reqFormKeyboard }}" value="F11"><br />
+				<input type="submit" name="{{ reqFormKeyboard }}" value="Esc"><br />
 			</form>
 		</div>
 	</div>
