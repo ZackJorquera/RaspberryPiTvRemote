@@ -32,7 +32,11 @@ def getCPUTemp():
     if sys.platform == "linux":
         process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
         output, _error = process.communicate()
-        return float(output[output.index('=') + 1:output.rindex("'")])
+        #print(output)
+        #print(str(output).split("=")[1])
+        temp = float(str(output).split("=")[1].split("'")[0])
+        #print(str(temp))
+        return temp
     else:
         return 53.2  # test
 
@@ -40,7 +44,7 @@ def getCPUTemp():
 def getCPUData():
     cpuTemp = getCPUTemp()
 
-    if cpuTemp >= 50:
+    if cpuTemp >= 60:
         cpuOverHeat = "True"
     else:
         cpuOverHeat = "False"
@@ -162,6 +166,9 @@ def ctrlrKeyboard(keyboardRequest):
         pyautogui.press('f5')
     elif keyboardRequest == html.unescape('Esc'):
         pyautogui.press('esc')
+    elif keyboardRequest == "Change Tab":
+        pyautogui.hotkey('ctrl', 'tab')
+
     else:
         return
 
