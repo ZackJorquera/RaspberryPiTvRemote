@@ -6,6 +6,8 @@ import webbrowser
 from subprocess import PIPE, Popen
 import sys
 import html
+import os
+import subprocess
 
 app = Flask(__name__)
 app.secret_key = "Not Random. Oh Noes"
@@ -27,15 +29,20 @@ MOUSE_MOVE_LARGE = 400
 MOUSE_MOVE_MEDIUM = 100
 MOUSE_MOVE_SMALL = 25
 
+LOCAL_VIDEO_DIR_LINUX = "/home/pi/Videos"
+LOCAL_VIDEO_DIR_WIN = "C:\\Users\\jorqu\\Videos"
+
+FILE_SELECTOR_OPEN_FILE = "openVideoFile"
+
+videoFilePaths = [".mp4", ".avi"]
+
 
 def getCPUTemp():
     if sys.platform == "linux":
         process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
         output, _error = process.communicate()
-        #print(output)
-        #print(str(output).split("=")[1])
         temp = float(str(output).split("=")[1].split("'")[0])
-        #print(str(temp))
+        #  print(str(temp))
         return temp
     else:
         return 53.2  # test
@@ -44,7 +51,7 @@ def getCPUTemp():
 def getCPUData():
     cpuTemp = getCPUTemp()
 
-    if cpuTemp >= 60:
+    if cpuTemp >= 70:
         cpuOverHeat = "True"
     else:
         cpuOverHeat = "False"
@@ -81,7 +88,7 @@ def homePost():
         return redirect(url_for('ctrlr'))
     elif request.form["submit"] == HOME_OPEN_FILE_STRING:
         # open local files logic
-        return redirect(url_for('fileSelecter'))
+        return redirect(url_for('fileSelector'))
     elif request.form["submit"] == HOME_OPEN_URL_STRING:
         webbrowser.open(request.form["urlInputBox"])
         return redirect(url_for('ctrlr'))
@@ -184,6 +191,35 @@ def ctrlrPost():
             pyautogui.write(request.form[TYPE_INPUT_BOX_NAME])
 
     return redirect(url_for('ctrlr'))
+
+
+@app.route('/fileSelector', methods=['GET'])
+def fileSelector():
+    if sys.platform == "win32":
+        files = [f for f in os.listdir(LOCAL_VIDEO_DIR_WIN) if os.path.isfile(os.path.join(LOCAL_VIDEO_DIR_WIN, f)) and
+             os.path.splitext(f)[1] in videoFilePaths]
+    else:
+        files = [f for f in os.listdir(LOCAL_VIDEO_DIR_LINUX) if os.path.isfile(os.path.join(LOCAL_VIDEO_DIR_LINUX, f)) and
+             os.path.splitext(f)[1] in videoFilePaths]
+
+    return render_template('FileSelector.html', openFileForm=FILE_SELECTOR_OPEN_FILE, files=files)
+
+
+@app.route('/fileSelector', methods=['POST'])
+def fileSelectorPost():
+    if FILE_SELECTOR_OPEN_FILE in request.form:
+        open_file(os.path.join(LOCAL_VIDEO_DIR_WIN, request.form[FILE_SELECTOR_OPEN_FILE]))
+        return redirect(url_for('ctrlr'))
+    else:
+        return redirect(url_for('fileSelector'))
+
+
+def open_file(filename):
+    if sys.platform == "win32":
+        os.startfile(filename)
+    else:
+        opener ="open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, filename])
 
 
 if __name__ == "__main__":
