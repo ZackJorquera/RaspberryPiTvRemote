@@ -157,8 +157,10 @@ def ctrlrKeyboard(keyboardRequest):
         pyautogui.press('tab')
     elif keyboardRequest == "Space":
         pyautogui.press('space')
-    elif keyboardRequest == "Close":
+    elif keyboardRequest == "Close Tab":
         pyautogui.hotkey('ctrl', 'w')
+    elif keyboardRequest == "Close Window":
+        pyautogui.hotkey('alt', 'f4')
     elif keyboardRequest == html.unescape('&uarr;'):  # up arrow
         pyautogui.press('up')
     elif keyboardRequest == html.unescape('&larr;'):
