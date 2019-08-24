@@ -208,7 +208,10 @@ def fileSelector():
 @app.route('/fileSelector', methods=['POST'])
 def fileSelectorPost():
     if FILE_SELECTOR_OPEN_FILE in request.form:
-        open_file(os.path.join(LOCAL_VIDEO_DIR_WIN, request.form[FILE_SELECTOR_OPEN_FILE]))
+        if sys.platform == "win32":
+            open_file(os.path.join(LOCAL_VIDEO_DIR_WIN, request.form[FILE_SELECTOR_OPEN_FILE]))
+        else:
+            open_file(os.path.join(LOCAL_VIDEO_DIR_LINUX, request.form[FILE_SELECTOR_OPEN_FILE]))
         return redirect(url_for('ctrlr'))
     else:
         return redirect(url_for('fileSelector'))
@@ -218,7 +221,7 @@ def open_file(filename):
     if sys.platform == "win32":
         os.startfile(filename)
     else:
-        opener ="open" if sys.platform == "darwin" else "xdg-open"
+        opener = "vlc" #  "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, filename])
 
 
