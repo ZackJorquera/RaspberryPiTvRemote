@@ -18,6 +18,7 @@ HOME_OPEN_HULU_STRING = "Open Hulu"
 HOME_OPEN_FILE_STRING = "Open Local File"
 HOME_OPEN_YOUTUBE_STRING = "Open Youtube"
 HOME_OPEN_URL_STRING = "Open URL"
+HOME_GET_CPU_TEMP_STRING = "Get CPU Temp"
 
 CTRLR_REQUEST_FORM_MOUSE = "mouse"
 CTRLR_REQUEST_FORM_KEYBOARD = "keyboard"
@@ -34,7 +35,7 @@ LOCAL_VIDEO_DIR_WIN = "C:\\Users\\jorqu\\Videos"
 
 FILE_SELECTOR_OPEN_FILE = "openVideoFile"
 
-videoFilePaths = [".mp4", ".avi"]
+videoFilePaths = [".mp4", ".avi", ".mkv"]
 
 
 def getCPUTemp():
@@ -51,14 +52,14 @@ def getCPUTemp():
 def getCPUData():
     cpuTemp = getCPUTemp()
 
-    if cpuTemp >= 70:
+    if cpuTemp >= 60:
         cpuOverHeat = "True"
     else:
         cpuOverHeat = "False"
 
     cpuOverHeatMsg = "The CPU temp is at " + str(cpuTemp) + " C. This is very hot."
 
-    return cpuOverHeat, cpuOverHeatMsg
+    return cpuOverHeat, cpuOverHeatMsg, cpuTemp
 
 
 @app.route('/')
@@ -68,11 +69,12 @@ def start():
 
 @app.route('/Home', methods=['GET'])
 def home():
-    cpuOverHeat, cpuOverHeatMsg = getCPUData()
+    cpuOverHeat, cpuOverHeatMsg, cpuTemp = getCPUData()
     return render_template("MainPage.html", openNetflixString=HOME_OPEN_NETFLIX_STRING,
                            openHuluString=HOME_OPEN_HULU_STRING, openFileString=HOME_OPEN_FILE_STRING,
                            openYoutubeString=HOME_OPEN_YOUTUBE_STRING, cpuOverHeat=cpuOverHeat,
-                           cpuOverHeatMsg=cpuOverHeatMsg, openURLString=HOME_OPEN_URL_STRING)
+                           cpuOverHeatMsg=cpuOverHeatMsg, openURLString=HOME_OPEN_URL_STRING,
+                           getCPUTempString=HOME_GET_CPU_TEMP_STRING, cpuTemp=cpuTemp)
 
 
 @app.route('/Home', methods=['POST'])
@@ -99,7 +101,7 @@ def homePost():
 
 @app.route('/MouseAndKeyboardCtrlr', methods=['GET'])
 def ctrlr():
-    cpuOverHeat, cpuOverHeatMsg = getCPUData()
+    cpuOverHeat, cpuOverHeatMsg, cpuTemp = getCPUData()
     return render_template("MouseAndKeyboardCtrlr.html", reqFormMouse=CTRLR_REQUEST_FORM_MOUSE,
                            reqFormKeyboard=CTRLR_REQUEST_FORM_KEYBOARD, typeInputBox=TYPE_INPUT_BOX_NAME,
                            reqFormType=CTRLR_REQUEST_FORM_TYPE, cpuOverHeat=cpuOverHeat,
@@ -135,7 +137,7 @@ def ctrlrMouse(mouseRequest):
         pyautogui.move(-MOUSE_MOVE_LARGE, None, duration=duration)
     elif mouseRequest == "Center":
         screenWidth, screenHeight = pyautogui.size()
-        pyautogui.moveTo(screenWidth/2, screenHeight/2, duration=duration)
+        pyautogui.moveTo(screenWidth / 2, screenHeight / 2, duration=duration)
     elif mouseRequest == "0":
         pyautogui.click()
     elif mouseRequest == "Double Click":
@@ -199,12 +201,16 @@ def ctrlrPost():
 def fileSelector():
     if sys.platform == "win32":
         files = [f for f in os.listdir(LOCAL_VIDEO_DIR_WIN) if os.path.isfile(os.path.join(LOCAL_VIDEO_DIR_WIN, f)) and
-             os.path.splitext(f)[1] in videoFilePaths]
+                 os.path.splitext(f)[1] in videoFilePaths]
     else:
-        files = [f for f in os.listdir(LOCAL_VIDEO_DIR_LINUX) if os.path.isfile(os.path.join(LOCAL_VIDEO_DIR_LINUX, f)) and
-             os.path.splitext(f)[1] in videoFilePaths]
+        files = [f for f in os.listdir(LOCAL_VIDEO_DIR_LINUX) if os.path.isfile(os.path.join(LOCAL_VIDEO_DIR_LINUX, f))
+                 and os.path.splitext(f)[1] in videoFilePaths]
 
-    return render_template('FileSelector.html', openFileForm=FILE_SELECTOR_OPEN_FILE, files=files)
+    cpuOverHeat, cpuOverHeatMsg, cpuTemp = getCPUData()
+
+    return render_template('FileSelector.html', openFileForm=FILE_SELECTOR_OPEN_FILE, files=files,
+                           cpuOverHeat=cpuOverHeat, cpuOverHeatMsg=cpuOverHeatMsg
+                           )
 
 
 @app.route('/fileSelector', methods=['POST'])
@@ -223,7 +229,7 @@ def open_file(filename):
     if sys.platform == "win32":
         os.startfile(filename)
     else:
-        opener = "vlc" #  "open" if sys.platform == "darwin" else "xdg-open"
+        opener = "vlc"  # "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, filename])
 
 
